@@ -1,0 +1,46 @@
+[project]
+name = "fifa-world-cup-2026-rag"
+version = "0.1.0"
+description = "A RAG-powered conversational AI and vector explorer for FIFA World Cup 2026 data."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=0.5.23",
+    "kagglehub>=0.3.6",
+    "langchain>=0.3.14",
+    "langchain-chroma>=0.2.0",
+    "langchain-community>=0.3.14",
+    "langchain-openai>=0.2.14",
+    "langchain-text-splitters>=0.3.5",
+    "numpy>=1.26.4",
+    "openai>=1.59.0",
+    "pandas>=2.2.3",
+    "plotly>=5.24.1",
+    "pyarrow>=18.1.0",
+    "pydantic>=2.10.4",
+    "python-dotenv>=1.0.1",
+    "scikit-learn>=1.6.0",
+    "streamlit>=1.41.1",
+    "tenacity>=9.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.4",
+    "ruff>=0.8.6",
+]
+
+[project.scripts]
+wc2026-ingest = "wc2026_rag.ingest:main"
+wc2026-app = "wc2026_rag.app:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wc2026_rag"]
+
+[tool.ruff]
+line-length = 100
+
