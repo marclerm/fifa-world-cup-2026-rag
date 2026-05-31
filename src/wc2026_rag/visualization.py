@@ -17,8 +17,8 @@ def vector_dataframe(limit: int = 500) -> pd.DataFrame:
     client = PersistentClient(path=str(VECTOR_DB_DIR))
     collection = client.get_collection(COLLECTION_NAME)
     result = collection.get(limit=limit, include=["embeddings", "documents", "metadatas"])
-    embeddings = result.get("embeddings") or []
-    if not embeddings:
+    embeddings = result.get("embeddings")
+    if embeddings is None or len(embeddings) == 0:
         return pd.DataFrame(columns=["x", "y", "z", "source", "preview"])
 
     coords = PCA(n_components=3, random_state=42).fit_transform(embeddings)
@@ -61,4 +61,3 @@ def vector_figure(limit: int = 500):
 def embed_texts_for_preview(texts: list[str]) -> list[list[float]]:
     """Embed arbitrary text snippets for demos and tests."""
     return OpenAIEmbeddings(model=EMBEDDING_MODEL).embed_documents(texts)
-
