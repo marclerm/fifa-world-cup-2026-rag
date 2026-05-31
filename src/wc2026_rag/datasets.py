@@ -156,7 +156,8 @@ def build_knowledge_base(download: bool = True, force_download: bool = False) ->
     write_seed_knowledge(KNOWLEDGE_BASE_DIR)
 
     count = 1
-    if download:
+    local_files_exist = any(iter_dataset_files())
+    if download and (force_download or not local_files_exist):
         try:
             download_kaggle_datasets(force=force_download)
         except Exception as exc:
@@ -170,7 +171,7 @@ def build_knowledge_base(download: bool = True, force_download: bool = False) ->
                 "open-source datasets.\n",
                 encoding="utf-8",
             )
-            return count + 1
+            count += 1
 
     for dataset_file in iter_dataset_files():
         try:

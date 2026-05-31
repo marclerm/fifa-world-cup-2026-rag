@@ -30,6 +30,10 @@ The repo also writes a small seed knowledge file with current tournament-format 
 links to official FIFA schedule references. Because fixtures and qualified teams can change,
 refresh ingestion before demos.
 
+For the smoothest local workflow, put downloaded files under `data/raw/`. The ingestion
+script reads local files first and only tries KaggleHub when no local raw files are present.
+See `data/README.md` for the expected local folder names and file meanings.
+
 ## Quick Start
 
 ```bash
