@@ -58,7 +58,8 @@ def main() -> None:
     chunks = split_documents(documents)
     vectorstore = create_vector_store(chunks)
     sample = vectorstore._collection.get(limit=1, include=["embeddings"])
-    dimensions = len(sample["embeddings"][0]) if sample.get("embeddings") else 0
+    embeddings = sample.get("embeddings")
+    dimensions = len(embeddings[0]) if embeddings is not None and len(embeddings) else 0
     print(f"Generated {generated} knowledge files")
     print(f"Loaded {len(documents)} documents")
     print(f"Stored {len(chunks)} vector chunks with {dimensions} dimensions")
@@ -67,4 +68,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
