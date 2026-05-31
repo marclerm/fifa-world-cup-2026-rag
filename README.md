@@ -7,7 +7,7 @@ of the embeddings.
 
 ## What It Builds
 
-- A Streamlit chat assistant for FIFA World Cup 2026 questions.
+- A Gradio chat assistant for FIFA World Cup 2026 questions.
 - A Kaggle-powered knowledge-base ingestion flow.
 - A Chroma vector database using OpenAI embeddings.
 - A 3D Plotly projection of stored vectors so users can see how chunks cluster.
@@ -48,7 +48,13 @@ wc2026-ingest
 Run the app:
 
 ```bash
-streamlit run src/wc2026_rag/app.py
+python src/wc2026_rag/app.py
+```
+
+or with the console script:
+
+```bash
+wc2026-app
 ```
 
 ## Suggested Demo Questions
@@ -88,4 +94,3 @@ flowchart LR
 - Add query rewriting and reranking from the advanced RAG lecture once baseline answers work.
 - Normalize team names across all three datasets before using probability fields.
 - Add bracket-level Monte Carlo simulation after group data is confirmed.
-

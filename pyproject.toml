@@ -20,7 +20,7 @@ dependencies = [
     "pydantic>=2.10.4",
     "python-dotenv>=1.0.1",
     "scikit-learn>=1.6.0",
-    "streamlit>=1.41.1",
+    "gradio>=5.12.0",
     "tenacity>=9.0.0",
 ]
 
@@ -43,4 +43,3 @@ packages = ["src/wc2026_rag"]
 
 [tool.ruff]
 line-length = 100
-
