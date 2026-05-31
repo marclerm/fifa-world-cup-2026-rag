@@ -20,19 +20,28 @@ does not have access yet.
 
 ## Data Sources
 
-Configured Kaggle datasets:
+The source datasets come from Kaggle and credit belongs to the Kaggle users who published
+them:
 
-- `sarazahran1/wc2026-match-probability-baseline-dataset`
-- `areezvisram12/fifa-world-cup-2026-match-data-unofficial`
-- `harrachimustapha/fifa-world-cup-team-dataset`
+- `sarazahran1/wc2026-match-probability-baseline-dataset`:
+  <https://www.kaggle.com/datasets/sarazahran1/wc2026-match-probability-baseline-dataset>
+- `areezvisram12/fifa-world-cup-2026-match-data-unofficial`:
+  <https://www.kaggle.com/datasets/areezvisram12/fifa-world-cup-2026-match-data-unofficial>
+- `harrachimustapha/fifa-world-cup-team-dataset`:
+  <https://www.kaggle.com/datasets/harrachimustapha/fifa-world-cup-team-dataset>
+
+For day-to-day development, this project reads downloaded copies from `data/raw/` instead
+of pulling directly from Kaggle every time. Keeping local copies avoids network connection
+issues, Kaggle authentication interruptions, rate limits, and changing remote availability
+while still preserving the original Kaggle attribution above.
 
 The repo also writes a small seed knowledge file with current tournament-format notes and
 links to official FIFA schedule references. Because fixtures and qualified teams can change,
 refresh ingestion before demos.
 
-For the smoothest local workflow, put downloaded files under `data/raw/`. The ingestion
-script reads local files first and only tries KaggleHub when no local raw files are present.
-See `data/README.md` for the expected local folder names and file meanings.
+The ingestion script reads local files first and only tries KaggleHub when no local raw
+files are present. See `data/README.md` for the expected local folder names and file
+meanings.
 
 ## Quick Start
 
@@ -86,7 +95,7 @@ flowchart LR
     E --> F["Chroma vector_db"]
     F --> G["rag.py retrieval"]
     G --> H["OpenAI nano model"]
-    H --> I["Streamlit chat"]
+    H --> I["Gradio chat"]
     F --> J["3D vector explorer"]
     K["simulation.py"] --> I
 ```
