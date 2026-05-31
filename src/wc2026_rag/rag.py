@@ -34,6 +34,11 @@ def get_vectorstore() -> Chroma:
     )
 
 
+def vector_count() -> int:
+    """Return the number of stored chunks in Chroma."""
+    return int(get_vectorstore()._collection.count())
+
+
 @lru_cache(maxsize=1)
 def get_llm() -> ChatOpenAI:
     return ChatOpenAI(model=CHAT_MODEL, temperature=0.2)
@@ -48,6 +53,12 @@ def combine_question(question: str, history: list[dict] | None = None) -> str:
 
 def fetch_context(question: str, history: list[dict] | None = None, k: int = RETRIEVAL_K) -> list[Document]:
     vectorstore = get_vectorstore()
+    if vectorstore._collection.count() == 0:
+        raise RuntimeError(
+            "The Chroma vector store is empty. Run `wc2026-ingest` before starting the app. "
+            "If Kaggle credentials are not configured yet, ingestion will still index the built-in "
+            "FIFA seed knowledge."
+        )
     query = combine_question(question, history)
     return vectorstore.similarity_search(query, k=k)
 
@@ -69,4 +80,3 @@ def answer_question(question: str, history: list[dict] | None = None) -> tuple[s
     messages.append(HumanMessage(content=question))
     response = get_llm().invoke(messages)
     return str(response.content), docs
-

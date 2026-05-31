@@ -5,7 +5,7 @@ from __future__ import annotations
 import gradio as gr
 
 from wc2026_rag.config import CHAT_MODEL, SUGGESTED_QUESTIONS, VECTOR_DB_DIR
-from wc2026_rag.rag import answer_question
+from wc2026_rag.rag import answer_question, vector_count
 from wc2026_rag.simulation import describe_advancement, simulate_group
 from wc2026_rag.visualization import vector_figure
 
@@ -52,7 +52,11 @@ def respond(history: list[dict]) -> tuple[list[dict], str]:
         {"role": item["role"], "content": message_text(item["content"])}
         for item in history[:-1]
     ]
-    answer, docs = answer_question(question, prior)
+    try:
+        answer, docs = answer_question(question, prior)
+    except Exception as exc:
+        answer = f"Retrieval is not ready: {exc}"
+        docs = []
     history = history + [{"role": "assistant", "content": answer}]
     return history, format_context(docs)
 
@@ -91,9 +95,14 @@ def build_ui() -> gr.Blocks:
     theme = gr.themes.Soft(primary_hue="teal", neutral_hue="slate")
 
     with gr.Blocks(title="FIFA World Cup 2026 RAG", theme=theme) as demo:
+        try:
+            count_text = f"{vector_count():,} stored chunks"
+        except Exception:
+            count_text = "vector store not built"
+
         gr.Markdown(
             "# FIFA World Cup 2026 Conversational AI\n"
-            f"Model: `{CHAT_MODEL}` | Vector store: `{VECTOR_DB_DIR}`"
+            f"Model: `{CHAT_MODEL}` | Vector store: `{VECTOR_DB_DIR}` | {count_text}"
         )
 
         with gr.Tab("Chat"):

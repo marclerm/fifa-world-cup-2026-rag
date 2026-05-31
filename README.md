@@ -45,6 +45,11 @@ Add your `OPENAI_API_KEY` to `.env`, then build the knowledge base and vector st
 wc2026-ingest
 ```
 
+If Kaggle credentials are not configured yet, ingestion will still index the built-in FIFA
+seed knowledge and write a warning file. That seed knowledge includes the tournament start
+date and Mexico's currently listed Group A fixtures, so the first chat demo should work even
+before the Kaggle datasets are available.
+
 Run the app:
 
 ```bash

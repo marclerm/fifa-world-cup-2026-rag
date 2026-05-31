@@ -118,12 +118,19 @@ def write_seed_knowledge(base_dir: Path = KNOWLEDGE_BASE_DIR) -> None:
 The FIFA World Cup 2026 is hosted by Canada, Mexico, and the United States. FIFA describes
 the tournament as a 48-team event with 104 matches across 16 host cities.
 
-The tournament runs from June 11, 2026 through July 19, 2026. The opening match is scheduled
-for Mexico City, and the final is scheduled for the New York New Jersey venue.
+The tournament runs from Thursday, June 11, 2026 through Sunday, July 19, 2026. The opening
+match is scheduled for Mexico City, and the final is scheduled for the New York New Jersey
+venue.
 
 Mexico is in Group A. Current public schedule references list Mexico's group as including
-South Africa, South Korea, and Czechia. Treat schedule and draw facts as date-sensitive and
-prefer the freshest official FIFA match schedule when updating the knowledge base.
+South Africa, Korea Republic, and Czechia. Treat schedule and draw facts as date-sensitive
+and prefer the freshest official FIFA match schedule when updating the knowledge base.
+
+Mexico group-stage schedule from FIFA public fixture references:
+- Thursday, June 11, 2026: Mexico v South Africa, Group A, Mexico City Stadium. FIFA's
+  schedule announcement listed kickoff at 13:00 local time in Mexico City.
+- Thursday, June 18, 2026: Mexico v Korea Republic, Group A, Estadio Guadalajara.
+- Wednesday, June 24, 2026: Czechia v Mexico, Group A, Mexico City Stadium.
 
 Useful official FIFA references:
 - FIFA World Cup 2026 fixtures and stadiums page
@@ -145,13 +152,26 @@ Projection guidance:
 
 def build_knowledge_base(download: bool = True, force_download: bool = False) -> int:
     """Create Markdown knowledge files from Kaggle data plus seed facts."""
-    if download:
-        download_kaggle_datasets(force=force_download)
-
     KNOWLEDGE_BASE_DIR.mkdir(parents=True, exist_ok=True)
     write_seed_knowledge(KNOWLEDGE_BASE_DIR)
 
     count = 1
+    if download:
+        try:
+            download_kaggle_datasets(force=force_download)
+        except Exception as exc:
+            warning_path = KNOWLEDGE_BASE_DIR / "kaggle_download_warning.md"
+            warning_path.write_text(
+                "# Kaggle download warning\n"
+                "The curated FIFA seed knowledge was still generated, but KaggleHub could "
+                "not download the configured datasets.\n\n"
+                f"Error: {exc}\n\n"
+                "Configure Kaggle credentials, then rerun `wc2026-ingest` to add the full "
+                "open-source datasets.\n",
+                encoding="utf-8",
+            )
+            return count + 1
+
     for dataset_file in iter_dataset_files():
         try:
             df = read_table(dataset_file.path)
@@ -171,4 +191,3 @@ def build_knowledge_base(download: bool = True, force_download: bool = False) ->
             count += 1
 
     return count
-
