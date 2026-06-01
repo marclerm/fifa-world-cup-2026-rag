@@ -13,13 +13,11 @@ WORLD_CUP_CSS = """
 :root {
   --wc-green: #3CAC3B;
   --wc-blue: #2A398D;
-  --wc-red: #E61D25;
-  --wc-light-gray: #D1D4D1;
   --wc-dark-gray: #474A4A;
 }
 
 .gradio-container {
-  color: var(--wc-dark-gray);
+  color: var(--wc-blue);
 }
 
 .gradio-container h1 {
@@ -35,18 +33,19 @@ WORLD_CUP_CSS = """
 
 button.primary,
 .gradio-container .primary {
-  background: var(--wc-red) !important;
-  border-color: var(--wc-red) !important;
-  color: white !important;
+  background: var(--wc-green) !important;
+  border-color: var(--wc-green) !important;
+  color: var(--wc-blue) !important;
 }
 
 .gradio-container button.secondary {
-  border-color: var(--wc-light-gray) !important;
+  border-color: var(--wc-blue) !important;
+  color: var(--wc-blue) !important;
 }
 
 .gradio-container button.secondary:hover {
   border-color: var(--wc-green) !important;
-  color: var(--wc-blue) !important;
+  color: var(--wc-green) !important;
 }
 
 .tab-nav button.selected {
@@ -55,11 +54,20 @@ button.primary,
 }
 
 .message.user {
-  background: rgba(60, 172, 59, 0.12) !important;
+  border-left: 4px solid var(--wc-green) !important;
+  color: var(--wc-blue) !important;
 }
 
 .message.bot {
-  background: rgba(42, 57, 141, 0.08) !important;
+  border-left: 4px solid var(--wc-blue) !important;
+  color: var(--wc-blue) !important;
+}
+
+.wc-status,
+.error,
+.toast-wrap,
+.toast-body {
+  color: var(--wc-dark-gray) !important;
 }
 
 textarea:focus,
@@ -153,7 +161,7 @@ def run_simulation(teams_text: str, seed: int):
 def build_ui() -> gr.Blocks:
     """Construct the Gradio app."""
     theme = gr.themes.Soft(
-        primary_hue="red",
+        primary_hue="green",
         secondary_hue="green",
         neutral_hue="slate",
     )
@@ -166,7 +174,8 @@ def build_ui() -> gr.Blocks:
 
         gr.Markdown(
             "# FIFA World Cup 2026 Conversational AI\n"
-            f"Model: `{CHAT_MODEL}` | Vector store: `{VECTOR_DB_DIR}` | {count_text}"
+            f"<span class='wc-status'>Model: `{CHAT_MODEL}` | "
+            f"Vector store: `{VECTOR_DB_DIR}` | {count_text}</span>"
         )
 
         with gr.Tab("Chat"):
