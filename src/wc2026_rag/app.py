@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import csv
+
 import gradio as gr
 
-from wc2026_rag.config import CHAT_MODEL, SUGGESTED_QUESTIONS, VECTOR_DB_DIR
+from wc2026_rag.config import CHAT_MODEL, RAW_DATA_DIR, SUGGESTED_QUESTIONS, VECTOR_DB_DIR
 from wc2026_rag.rag import answer_question, vector_count
 from wc2026_rag.simulation import describe_advancement, simulate_group
 from wc2026_rag.visualization import vector_figure
@@ -143,11 +145,28 @@ def run_vector_plot(limit: int):
         raise gr.Error(f"Vector explorer is not ready yet. Run wc2026-ingest first. Details: {exc}")
 
 
-def run_simulation(teams_text: str, seed: int):
+def world_cup_team_choices() -> list[str]:
+    """Load selectable national teams from the local World Cup schedule data."""
+    teams_path = RAW_DATA_DIR / "match_schedule_unofficial" / "teams.csv"
+    fallback = ["Mexico", "South Africa", "South Korea", "Canada"]
+    if not teams_path.exists():
+        return fallback
+
+    with teams_path.open(newline="", encoding="utf-8") as file:
+        rows = csv.DictReader(file)
+        teams = [
+            row["team_name"]
+            for row in rows
+            if row.get("team_name") and row.get("is_placeholder", "").lower() != "true"
+        ]
+    return teams or fallback
+
+
+def run_simulation(teams: list[str], seed: int):
     """Run the group simulator and format results for display."""
-    teams = [team.strip() for team in teams_text.split(",") if team.strip()]
+    teams = [team.strip() for team in teams if team and team.strip()]
     if len(teams) < 2:
-        raise gr.Error("Enter at least two teams separated by commas.")
+        raise gr.Error("Select at least two teams.")
 
     standings, results = simulate_group(teams, seed=int(seed))
     result_lines = [
@@ -235,11 +254,25 @@ def build_ui() -> gr.Blocks:
 
         with gr.Tab("Simulator"):
             gr.Markdown("Run a lightweight scenario simulation for a group or custom team set.")
-            teams = gr.Textbox(
+            team_choices = world_cup_team_choices()
+            default_teams = [
+                team
+                for team in ["Mexico", "South Africa", "South Korea", "Canada"]
+                if team in team_choices
+            ]
+            teams = gr.Dropdown(
+                choices=team_choices,
                 label="Teams",
-                value="Mexico, South Africa, South Korea, Czechia",
+                value=default_teams,
+                multiselect=True,
+                filterable=True,
             )
             seed = gr.Number(label="Simulation seed", value=7, precision=0)
+            gr.Markdown(
+                "<span class='wc-status'>The simulation seed controls repeatability. "
+                "Use the same seed to get the same projected scores and standings; "
+                "change it to explore another random scenario.</span>"
+            )
             run = gr.Button("Run simulation", variant="primary")
             standings = gr.Dataframe(label="Projected standings")
             summary = gr.Markdown(label="Scenario summary")
