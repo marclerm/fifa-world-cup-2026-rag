@@ -8,7 +8,7 @@
 ![Plotly](https://img.shields.io/badge/Plotly-viz-3F4F75?logo=plotly&logoColor=white)
 ![RAG](https://img.shields.io/badge/RAG-pipelines-2EA44F)
 
-> **Tags:** `LLMs` · `RAG` · `Embeddings` · `Vector Stores` · `LangChain` · `Chroma` · `OpenAI` · `Gradio` · `Plotly` · `KaggleHub` · `Simulation` · `Prompt Engineering`
+> **Tags:** `LLMs` · `RAG` · `Embeddings` · `Vector Stores` · `LangChain` · `Chroma` · `OpenAI` · `Gradio` · `Plotly` · `Kaggle` · `Simulation` · `Prompt Engineering`
 
 A project scaffold inspired by `applied-llm-engineering`: offline ingestion, Chroma vector storage, retrieval-augmented
 answers, a conversational UI, suggested test questions, projection helpers, and a 3D view
