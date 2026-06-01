@@ -1,5 +1,10 @@
 # FIFA World Cup 2026 RAG Assistant
 
+## Tags
+
+- **Concepts:** Retrieval-Augmented Generation (RAG), embeddings, vector databases, document splitting, retrieval, prompt engineering, conversational UI, simulation, projection/visualization (PCA), reproducible ingestion.
+- **Libraries / Modules:** `gradio`, `langchain_chroma`, `langchain_core`, `langchain_openai`, `langchain_community`, `langchain_text_splitters`, `chromadb`, `plotly`, `scikit-learn`, `pandas`, `numpy`, `kagglehub`, plus standard library modules such as `csv`, `json`, `pathlib`, and `shutil`.
+
 A project scaffold inspired by `applied-llm-engineering`: offline ingestion, Chroma vector storage, retrieval-augmented
 answers, a conversational UI, suggested test questions, projection helpers, and a 3D view
 of the embeddings.
