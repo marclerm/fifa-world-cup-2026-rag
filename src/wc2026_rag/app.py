@@ -9,6 +9,66 @@ from wc2026_rag.rag import answer_question, vector_count
 from wc2026_rag.simulation import describe_advancement, simulate_group
 from wc2026_rag.visualization import vector_figure
 
+WORLD_CUP_CSS = """
+:root {
+  --wc-green: #3CAC3B;
+  --wc-blue: #2A398D;
+  --wc-red: #E61D25;
+  --wc-light-gray: #D1D4D1;
+  --wc-dark-gray: #474A4A;
+}
+
+.gradio-container {
+  color: var(--wc-dark-gray);
+}
+
+.gradio-container h1 {
+  color: var(--wc-blue);
+  border-bottom: 4px solid var(--wc-green);
+  padding-bottom: 0.35rem;
+}
+
+.gradio-container h2,
+.gradio-container h3 {
+  color: var(--wc-blue);
+}
+
+button.primary,
+.gradio-container .primary {
+  background: var(--wc-red) !important;
+  border-color: var(--wc-red) !important;
+  color: white !important;
+}
+
+.gradio-container button.secondary {
+  border-color: var(--wc-light-gray) !important;
+}
+
+.gradio-container button.secondary:hover {
+  border-color: var(--wc-green) !important;
+  color: var(--wc-blue) !important;
+}
+
+.tab-nav button.selected {
+  color: var(--wc-blue) !important;
+  border-bottom-color: var(--wc-green) !important;
+}
+
+.message.user {
+  background: rgba(60, 172, 59, 0.12) !important;
+}
+
+.message.bot {
+  background: rgba(42, 57, 141, 0.08) !important;
+}
+
+textarea:focus,
+input:focus {
+  border-color: var(--wc-green) !important;
+  box-shadow: 0 0 0 1px var(--wc-green) !important;
+}
+"""
+
 
 def message_text(content) -> str:
     """Normalize Gradio message content to plain text for the RAG layer."""
@@ -92,9 +152,13 @@ def run_simulation(teams_text: str, seed: int):
 
 def build_ui() -> gr.Blocks:
     """Construct the Gradio app."""
-    theme = gr.themes.Soft(primary_hue="teal", neutral_hue="slate")
+    theme = gr.themes.Soft(
+        primary_hue="red",
+        secondary_hue="green",
+        neutral_hue="slate",
+    )
 
-    with gr.Blocks(title="FIFA World Cup 2026 RAG", theme=theme) as demo:
+    with gr.Blocks(title="FIFA World Cup 2026 RAG", theme=theme, css=WORLD_CUP_CSS) as demo:
         try:
             count_text = f"{vector_count():,} stored chunks"
         except Exception:
