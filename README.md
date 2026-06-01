@@ -1,7 +1,6 @@
 # FIFA World Cup 2026 RAG Assistant
 
-A project scaffold inspired by Week Four and especially Week Five of
-`applied-llm-engineering`: offline ingestion, Chroma vector storage, retrieval-augmented
+A project scaffold inspired by `applied-llm-engineering`: offline ingestion, Chroma vector storage, retrieval-augmented
 answers, a conversational UI, suggested test questions, projection helpers, and a 3D view
 of the embeddings.
 
