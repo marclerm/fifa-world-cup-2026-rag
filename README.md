@@ -46,8 +46,9 @@ meanings.
 ## Quick Start
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
+pip install --upgrade pip
 pip install -e ".[dev]"
 cp .env.example .env
 ```
@@ -66,7 +67,7 @@ before the Kaggle datasets are available.
 Run the app:
 
 ```bash
-python src/wc2026_rag/app.py
+python3 src/wc2026_rag/app.py
 ```
 
 or with the console script:
@@ -80,9 +81,17 @@ wc2026-app
 - When are Mexico's group-stage games scheduled?
 - Which teams are most likely to advance from the group stage?
 - Simulate a likely path from group stage to the final.
+- What team could be the surprise of this World Cup?
 - What evidence did you retrieve for that answer?
 - Which dataset fields look useful for match projections?
 - Explain how the vector store was created.
+
+## Local Checks
+
+```bash
+python3 -m compileall src tests
+pytest
+```
 
 ## Architecture
 
