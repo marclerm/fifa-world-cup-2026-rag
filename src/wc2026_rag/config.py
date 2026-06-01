@@ -30,8 +30,8 @@ SUGGESTED_QUESTIONS = [
     "When are Mexico's group-stage games scheduled?",
     "Which teams are most likely to advance from the group stage?",
     "Simulate a likely path from group stage to the final.",
+    "What team could be the surprise of this World Cup?",
     "What evidence did you retrieve for that answer?",
     "Which dataset fields look useful for match projections?",
     "Explain how the vector store was created.",
 ]
-
