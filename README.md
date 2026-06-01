@@ -1,18 +1,14 @@
 # FIFA World Cup 2026 RAG Assistant
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-Notebooks-F37626?logo=jupyter&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?logo=openai&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-1.0-1C3C3C)
 ![Chroma](https://img.shields.io/badge/Chroma-vector%20store-FF6B6B)
 ![Gradio](https://img.shields.io/badge/Gradio-UIs-FF7C00?logo=gradio&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-viz-3F4F75?logo=plotly&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-data-150458?logo=pandas&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-numeric-013243?logo=numpy&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-ml-F7931E?logo=scikit-learn&logoColor=white)
 ![RAG](https://img.shields.io/badge/RAG-pipelines-2EA44F)
 
-> **Tags:** `LLMs` · `RAG` · `Embeddings` · `Vector Stores` · `LangChain` · `Chroma` · `OpenAI` · `Gradio` · `Plotly` · `Pandas` · `NumPy` · `scikit-learn` · `KaggleHub` · `Simulation` · `Prompt Engineering`
+> **Tags:** `LLMs` · `RAG` · `Embeddings` · `Vector Stores` · `LangChain` · `Chroma` · `OpenAI` · `Gradio` · `Plotly` · `KaggleHub` · `Simulation` · `Prompt Engineering`
 
 A project scaffold inspired by `applied-llm-engineering`: offline ingestion, Chroma vector storage, retrieval-augmented
 answers, a conversational UI, suggested test questions, projection helpers, and a 3D view
